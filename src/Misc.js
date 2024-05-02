@@ -65,6 +65,7 @@ const Misc = () => {
       mode: 'dark',
     },
   });
+  //TODO need to style the app
 
   return (
       <ThemeProvider theme={theme}>
