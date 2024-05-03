@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import './index.css'
-import { saveItem, refreshItems, removeItem } from './envelopeDB'
+import { saveItem, refreshItems, removeItem, getDateDB } from './envelopeDB'
 import { CssBaseline, ThemeProvider, createTheme, Container, Card, CardContent, Typography, TextField, Button, List, ListItem, Box, ListItemText } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -9,10 +9,15 @@ const Misc = () => {
   const [amount, setAmount] = useState('')
   const [description, setDescription] = useState('')
   const [items, setItems] = useState([])
+  const [date, setDate] = useState('')
 
   useEffect(() => {
     refreshItems(updateTotalAmount)
   }, [totalAmount])
+
+  useEffect(() => {
+    getDateDB(setDate)
+  }, [])
 
   function updateTotalAmount(items) {
     setItems(items)
@@ -75,7 +80,7 @@ const Misc = () => {
           <CardContent>
             <Typography variant="h4" align="center">Misc: ${totalAmount}</Typography>
             <Typography variant="subtitle1" align="center" style={{ paddingTop: '10px' }}>
-              01/01/2024 - 01/01/2024
+              {date}
             </Typography>
           </CardContent>
         </Card>
