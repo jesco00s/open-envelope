@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import './index.css'
 import { saveItem, refreshItems, removeItem } from './envelopeDB'
-import { CssBaseline, ThemeProvider, createTheme, Container, Card, CardContent, Typography, TextField, Button, List, ListItem, Box, ListItemText, IconButton } from '@mui/material';
+import { CssBaseline, ThemeProvider, createTheme, Container, Card, CardContent, Typography, TextField, Button, List, ListItem, Box, ListItemText } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const Misc = () => {
@@ -66,7 +66,6 @@ const Misc = () => {
       mode: 'dark',
     },
   });
-  //TODO need to style the app
 
   return (
     <ThemeProvider theme={theme}>
