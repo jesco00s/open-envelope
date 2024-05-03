@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import './index.css'
 import { saveItem, refreshItems, removeItem } from './envelopeDB'
-import { CssBaseline, ThemeProvider, createTheme, Container, Card, CardContent, Typography, TextField, Button, List, ListItem, Divider } from '@mui/material';
+import { CssBaseline, ThemeProvider, createTheme, Container, Card, CardContent, Typography, TextField, Button, List, ListItem, Box, ListItemText, IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const Misc = () => {
   const [totalAmount, setTotalAmount] = useState(0)
@@ -68,10 +69,10 @@ const Misc = () => {
   //TODO need to style the app
 
   return (
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Container maxWidth="md" style={{ padding: '20px' }}>
-        <Card style={{ marginBottom: '20px' }}>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Container maxWidth="xs" sx={{ padding: '20px' }}>
+        <Card sx={{ marginBottom: '20px' }}>
           <CardContent>
             <Typography variant="h4" align="center">Misc: ${totalAmount}</Typography>
             <Typography variant="subtitle1" align="center" style={{ paddingTop: '10px' }}>
@@ -79,49 +80,52 @@ const Misc = () => {
             </Typography>
           </CardContent>
         </Card>
-        </Container>
-        <Card style={{ marginBottom: '10px' }}>
+
+        <Card sx={{ marginBottom: '10px' }}>
           <CardContent>
-            <form onSubmit={(e) => e.preventDefault()}>
-              <TextField
-                fullWidth
-                type="text"
-                name="formDescription"
-                label="Optional description"
-                variant="outlined"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                margin="normal"
-              />
-              <TextField
-                fullWidth
-                type="text"
-                name="amount"
-                label="Enter amount"
-                variant="outlined"
-                required
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-                margin="normal"
-              />
-              <Container>
-                <Button onClick={() => handleSubmit('add')} style={{ marginRight: '10px' }}>Add</Button>
-                <Button onClick={() => handleSubmit('subtract')}>Subtract</Button>
-              </Container>
-            </form>
+            <TextField
+              fullWidth
+              type="text"
+              name="formDescription"
+              label="Description"
+              variant="outlined"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              margin="normal"
+            />
+            <TextField
+              fullWidth
+              type="number"
+              name="amount"
+              label="Amount"
+              variant="outlined"
+              required
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              margin="normal"
+            />
+
+            <Box display="flex" justifyContent="center" alignItems="center">
+              <Button onClick={() => handleSubmit('add')} style={{ marginRight: '10px' }}>
+                Add
+              </Button>
+              <Button onClick={() => handleSubmit('subtract')}>Subtract</Button>
+            </Box>
           </CardContent>
         </Card>
-        <List>
+        <List
+        >
           {items.length > 0 && items.map((item, index) => (
             <ListItem key={index} divider>
-              <Typography>
+              <ListItemText>
                 {item.description} {item.operation} ${item.amount}
-              </Typography>
-              <Button onClick={() => handleRemoveItem(index)}>Remove</Button>
+              </ListItemText>
+              <Button onClick={() => handleRemoveItem(index)}><DeleteIcon /></Button>
             </ListItem>
           ))}
         </List>
-      </ThemeProvider>
+      </Container>
+    </ThemeProvider>
   )
 }
 
