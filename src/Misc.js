@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import './index.css'
-import { saveItem, refreshItems, removeItem, getDateDB } from './envelopeDB'
+import { saveItem, refreshItems, removeItem, getDateDB, saveWishItem, refreshWishItems } from './envelopeDB'
 import { CssBaseline, ThemeProvider, createTheme, Container, Card, CardContent, Typography, TextField, Button, List, ListItem, Box, ListItemText, Grid } from '@mui/material';
 import { Delete as DeleteIcon, AddCircle as AddCircleIcon, RemoveCircle as RemoveCircleIcon } from '@mui/icons-material';
 
@@ -10,6 +10,8 @@ const Misc = () => {
   const [description, setDescription] = useState('')
   const [items, setItems] = useState([])
   const [date, setDate] = useState('')
+  const [wishItem, setWishItem] = useState('')
+  const [wishItems, setWishItems] = useState([])
 
   useEffect(() => {
     refreshItems(updateTotalAmount)
@@ -17,6 +19,7 @@ const Misc = () => {
 
   useEffect(() => {
     getDateDB(setDate)
+    refreshWishItems(setWishItems)
   }, [])
 
   function updateTotalAmount(items) {
@@ -28,6 +31,11 @@ const Misc = () => {
       newTotal = isAddition ? newTotal + amount : newTotal - amount
     })
     setTotalAmount(newTotal)
+  }
+
+  function handleWishItem() {
+    saveWishItem(wishItem)
+    setWishItem('')
   }
 
   function handleSubmit(actionType) {
@@ -147,12 +155,12 @@ const Misc = () => {
                 name="formDescription"
                 label="Desired Item"
                 variant="outlined"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                value={wishItem}
+                onChange={(e) => setWishItem(e.target.value)}
                 margin="normal"
                 fullWidth
               />
-              <Button onClick={() => handleSubmit('add')} sx={{ marginLeft: 1 }}>
+              <Button onClick={() => handleWishItem()} sx={{ marginLeft: 1 }}>
                 <AddCircleIcon />
               </Button>
             </Box>
@@ -161,12 +169,12 @@ const Misc = () => {
 
           <CardContent className='wishListCard'>
             <List>
-              {items.length > 0 && items.map((item, index) => (
+              {wishItems.length > 0 && wishItems.map((item, index) => (
                 <ListItem key={index} divider>
                   <ListItemText>
-                    {item.description} {item.operation} ${item.amount}
+                    {item.value}
                   </ListItemText>
-                  <Button onClick={() => handleRemoveItem(index)}><DeleteIcon /></Button>
+                  {/* <Button onClick={() => handleRemoveItem(index)}><DeleteIcon /></Button> */}
                 </ListItem>
               ))}
             </List>

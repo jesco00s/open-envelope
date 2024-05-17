@@ -9,6 +9,7 @@ const app = initializeApp(appSettings)
 const database = getDatabase(app)
 const itemsDB = ref(database, 'items')
 const dateDB = ref(database, 'date')
+const wishItemDB = ref(database, 'wishItems')
 
 export const saveItem = (itemData) => {
   return push(itemsDB, itemData)
@@ -52,6 +53,23 @@ export const getDateDB = (callback) => {
 
       const finalDateString = `${formattedStart} - ${formattedEnd}`
       callback(finalDateString)
+    }
+  })
+}
+
+export const saveWishItem = (wishData) => {
+  return push(wishItemDB, wishData)
+}
+
+export const refreshWishItems = (callback) => {
+  onValue(wishItemDB, (snapshot) => {
+    if (snapshot.exists()) {
+      const itemsArray = Object.entries(snapshot.val())
+      const finalArray = itemsArray.map(([id, value]) => ({
+        id,
+        value,
+      }))
+      callback(finalArray)
     }
   })
 }
