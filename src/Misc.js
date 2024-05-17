@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import './index.css'
 import { saveItem, refreshItems, removeItem, getDateDB } from './envelopeDB'
-import { CssBaseline, ThemeProvider, createTheme, Container, Card, CardContent, Typography, TextField, Button, List, ListItem, Box, ListItemText } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { CssBaseline, ThemeProvider, createTheme, Container, Card, CardContent, Typography, TextField, Button, List, ListItem, Box, ListItemText, Grid } from '@mui/material';
+import { Delete as DeleteIcon, AddCircle as AddCircleIcon, RemoveCircle as RemoveCircleIcon } from '@mui/icons-material';
 
 const Misc = () => {
   const [totalAmount, setTotalAmount] = useState(0)
@@ -86,50 +86,94 @@ const Misc = () => {
         </Card>
 
         <Card sx={{ marginBottom: '10px' }}>
-          <CardContent>
-            <TextField
-              fullWidth
-              type="text"
-              name="formDescription"
-              label="Description"
-              variant="outlined"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              margin="normal"
-            />
-            <TextField
-              fullWidth
-              type="number"
-              name="amount"
-              label="Amount"
-              variant="outlined"
-              required
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              margin="normal"
-            />
+          <CardContent className='transactionCard'>
+            <Grid container alignItems="center">
+              <Grid item xs={9}>
+                <Grid container direction="column">
+                  <TextField
+                    fullWidth
+                    type="text"
+                    name="formDescription"
+                    label="Transaction Description"
+                    variant="outlined"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    margin="normal"
+                  />
 
-            <Box display="flex" justifyContent="center" alignItems="center">
-              <Button onClick={() => handleSubmit('add')} style={{ marginRight: '10px' }}>
-                Add
-              </Button>
-              <Button onClick={() => handleSubmit('subtract')}>Subtract</Button>
-            </Box>
+                  <TextField
+                    fullWidth
+                    type="number"
+                    name="amount"
+                    label="Transaction Amount"
+                    variant="outlined"
+                    required
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                    margin="normal"
+                  />
+                </Grid>
+              </Grid>
+              <Grid item xs={3}>
+                <Grid container direction="column" alignItems="flex-end">
+                  <Button onClick={() => handleSubmit('add')} sx={{ marginBottom: 3 }}>
+                    <AddCircleIcon />
+                  </Button>
+                  <Button onClick={() => handleSubmit('subtract')}><RemoveCircleIcon /></Button>
+
+                </Grid>
+              </Grid>
+            </Grid>
+          </CardContent>
+          <CardContent className='transactionCard'>
+            <List>
+              {items.length > 0 && items.map((item, index) => (
+                <ListItem key={index} divider>
+                  <ListItemText>
+                    {item.description} {item.operation} ${item.amount}
+                  </ListItemText>
+                  <Button onClick={() => handleRemoveItem(index)}><DeleteIcon /></Button>
+                </ListItem>
+              ))}
+            </List>
           </CardContent>
         </Card>
-        <List
-        >
-          {items.length > 0 && items.map((item, index) => (
-            <ListItem key={index} divider>
-              <ListItemText>
-                {item.description} {item.operation} ${item.amount}
-              </ListItemText>
-              <Button onClick={() => handleRemoveItem(index)}><DeleteIcon /></Button>
-            </ListItem>
-          ))}
-        </List>
+
+        <Card sx={{ marginTop: '20px' }}>
+          <CardContent className='wishListCard'>
+            <Box display="flex" alignItems="center">
+              <TextField
+                type="text"
+                name="formDescription"
+                label="Desired Item"
+                variant="outlined"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                margin="normal"
+                fullWidth
+              />
+              <Button onClick={() => handleSubmit('add')} sx={{ marginLeft: 1 }}>
+                <AddCircleIcon />
+              </Button>
+            </Box>
+
+          </CardContent>
+
+          <CardContent className='wishListCard'>
+            <List>
+              {items.length > 0 && items.map((item, index) => (
+                <ListItem key={index} divider>
+                  <ListItemText>
+                    {item.description} {item.operation} ${item.amount}
+                  </ListItemText>
+                  <Button onClick={() => handleRemoveItem(index)}><DeleteIcon /></Button>
+                </ListItem>
+              ))}
+            </List>
+          </CardContent>
+        </Card>
       </Container>
-    </ThemeProvider>
+    </ThemeProvider >
   )
 }
 

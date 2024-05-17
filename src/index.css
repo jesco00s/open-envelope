@@ -5,3 +5,15 @@ body {
   font-family: 'Rubik', sans-serif;
   user-select: none;
 }
+
+.transactionCard {
+  background-color: rgb(53, 53, 53);
+  margin: 20px;
+  border-radius: 5px;
+}
+
+.wishListCard {
+  background-color: rgb(45, 45, 45);
+  margin: 20px;
+  border-radius: 5px;
+}
