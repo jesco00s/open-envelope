@@ -70,6 +70,13 @@ export const refreshWishItems = (callback) => {
         value,
       }))
       callback(finalArray)
+    } else {
+      callback([])
     }
   })
+}
+
+export const removeWishItem = (itemId) => {
+  const itemRef = ref(database, `wishItems/${itemId}`)
+  return remove(itemRef)
 }

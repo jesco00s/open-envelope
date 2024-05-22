@@ -16,6 +16,8 @@ You may also see any lint errors in the console.
 
 
 ## TODO: 
+- Ability to add amount to desired
+- Ability to sum up the amout of the desired items
 - Button to delete all the transactions in the list
 - Ability to set date in the UI
 - New Envelope for Groceries

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import './index.css'
-import { saveItem, refreshItems, removeItem, getDateDB, saveWishItem, refreshWishItems } from './envelopeDB'
+import { saveItem, refreshItems, removeItem, getDateDB, saveWishItem, refreshWishItems, removeWishItem } from './envelopeDB'
 import { CssBaseline, ThemeProvider, createTheme, Container, Card, CardContent, Typography, TextField, Button, List, ListItem, Box, ListItemText, Grid } from '@mui/material';
 import { Delete as DeleteIcon, AddCircle as AddCircleIcon, RemoveCircle as RemoveCircleIcon } from '@mui/icons-material';
 
@@ -71,6 +71,14 @@ const Misc = () => {
       })
       .catch((error) => {
         console.error('Failed to remove item:', error)
+      })
+  }
+
+  const handleRemoveWishItem = (index) => {
+    const itemToRemove = wishItems[index]
+    removeWishItem(itemToRemove.id)
+      .catch((error) => {
+        console.error('Failed to remove wish item:', error)
       })
   }
 
@@ -174,7 +182,7 @@ const Misc = () => {
                   <ListItemText>
                     {item.value}
                   </ListItemText>
-                  {/* <Button onClick={() => handleRemoveItem(index)}><DeleteIcon /></Button> */}
+                  <Button onClick={() => handleRemoveWishItem(index)}><DeleteIcon /></Button>
                 </ListItem>
               ))}
             </List>
