@@ -29,6 +29,7 @@ const Misc = () => {
       const amount = parseFloat(item.amount)
       const isAddition = item.operation.includes('+')
       newTotal = isAddition ? newTotal + amount : newTotal - amount
+      newTotal = parseFloat(newTotal.toFixed(2));
     })
     setTotalAmount(newTotal)
   }
@@ -50,6 +51,7 @@ const Misc = () => {
       actionType === 'add'
         ? totalAmount + amountValue
         : totalAmount - amountValue
+    newTotal = parseFloat(newTotal.toFixed(2))
     setTotalAmount(newTotal)
 
     const item = {
